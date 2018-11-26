@@ -78,8 +78,8 @@ const IndexPage = () => (
 
     <div className="contact">
       <h3>Get in touch!</h3>
-      <a href="http://fb.com/keenondev">Facebook</a>
-      <a href="mailto:micorix.dev@gmail.com">micorix.dev@gmail.com</a>
+      <a href="http://fb.com/Keen-on-DEV-2001499309944433">Facebook</a>
+      <a href="mailto:blog@keenondev.com">blog@keenondev.com</a>
     </div>
     </Container>
 </Centered>
