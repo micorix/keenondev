@@ -4,88 +4,71 @@ import React from 'react'
 import Layout from '../components/layout'
 import Logo from '../images/logo-transparent.png'
 import MicorixLogo from '../images/micorix-logo.png'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
+import theme from '../theme';
+import { Link } from 'gatsby'
+import PostOverview from '../components/PostOverview';
 const primary = '#FF5757'
 const SiteWrapper = styled('div')`
-  width:100%;
+  width:50%;
+  margin:0 auto;
+  padding-top:5vh;
   height:100vh;
-  background: ${primary};
   font-family: 'Barlow';
-
-  a{
-    all: unset;
-    cursor:pointer;
-    margin: 20px 0 20px 0;
-    color: white;
-    text-decoration: underline;
-    display:block;
-    &:hover{
-      color:black;
-      font-size: 1.2em;
-    }
-  }
-`
-const Centered = styled('div')`
-  width:100%;
-  display: flex;
-  justify-content:center;
-`
-const Container = styled('div')`
-h1, h2, h3{
-  font-family: Advent Pro;
+  @media(max-width: 820px){
+    width:calc(100% - 2em);
+    padding-top: 0em;
 }
-  color:white;
-
-  .contact{
-    border-top: 5px dashed white;
-    h3{
-      margin: 20px 0 10px 0;
-    }
-  }
+ 
 `
-const ImageWrapper = styled('div')`
-margin-top:10vh;
-  & > span{
-    display:flex;
-    align-items:center;
-    justify-content: flex-end;
-    color:#ddd;
-
-    img{
-      width:50px;
-      margin:0 0 0 10px;
-    }
-  }
+const ListElement = styled.div`
 `
-const IndexPage = () => (
+const IndexPage = ({data}) => {
+    const siteTitle = data.site.siteMetadata.title
+    const posts = data.allMarkdownRemark.edges
+  
+  return (
   <Layout>
     <SiteWrapper>
-      <Centered>
-        <ImageWrapper>
-  <img src={Logo} />
-    <span>
-      <a href="http://micorix.me">by micorix</a><img src={MicorixLogo} className="small" />
-    </span>
-  </ImageWrapper>
-
-
-    </Centered>
-      <Centered>
-    <Container>
-      <h1>Hi people!</h1>
-      <h2>Welcome to KeenOnDEV Blog</h2>
-      <p>Here we're gonna build something great. Please visit us later.</p>
-
-    <div className="contact">
-      <h3>Get in touch!</h3>
-      <a href="http://fb.com/Keen-on-DEV-2001499309944433">Facebook</a>
-      <a href="mailto:blog@keenondev.com">blog@keenondev.com</a>
-    </div>
-    </Container>
-</Centered>
-
+    {posts.map(({ node }) => <PostOverview key={node.fields.slug} post={node} />)}
     </SiteWrapper>
   </Layout>
 )
+}
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+            image {
+              childImageSharp {
+                resize(width: 1500, height: 1500) {
+                  src
+                }
+                fluid(maxWidth: 400) {
+                  ...GatsbyImageSharpFluid
+                }
+          }
+       }
+          }
+        }
+      }
+    }
+  }
+`

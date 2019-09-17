@@ -6,7 +6,7 @@
 
 // You can delete this file if you're not using it
 import WebFont from 'webfontloader'
-
+import wrapWithProvider from "./wrapWithProvider"
 export const onClientEntry = () => {
   WebFont.load({
       google: {
@@ -14,3 +14,5 @@ export const onClientEntry = () => {
       }
     })
 }
+
+export const wrapRootElement = wrapWithProvider
