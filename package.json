@@ -5,7 +5,7 @@
   "author": "micorix",
   "dependencies": {
     "emotion": "^9.2.12",
-    "gatsby": "^2.0.53",
+    "gatsby": "^2.32.13",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-manifest": "^2.0.9",
     "gatsby-plugin-offline": "^2.0.16",
